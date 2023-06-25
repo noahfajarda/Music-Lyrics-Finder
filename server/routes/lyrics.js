@@ -45,8 +45,9 @@ async function getSongs(song, artist) {
 router.get("/track/:song/:artist", async (req, res) => {
   let data = await getSongs(req.params.song, req.params.artist || "")
   data = data.response.hits.map(result => {
-    const { url, song_art_image_url, full_title } = result.result
-    return { url, song_art_image_url, full_title }
+    const artist = result.result.primary_artist.name
+    const { url, song_art_image_url, full_title, title } = result.result
+    return { url, song_art_image_url, full_title, title, artist }
   })
   res.send(data)
 })
@@ -54,8 +55,9 @@ router.get("/track/:song/:artist", async (req, res) => {
 router.get("/track/:song", async (req, res) => {
   let data = await getSongs(req.params.song, "")
   data = data.response.hits.map(result => {
-    const { url, song_art_image_url, full_title } = result.result
-    return { url, song_art_image_url, full_title }
+    const artist = result.result.primary_artist.name
+    const { url, song_art_image_url, full_title, title } = result.result
+    return { url, song_art_image_url, full_title, title, artist }
   })
   res.send(data)
 })
